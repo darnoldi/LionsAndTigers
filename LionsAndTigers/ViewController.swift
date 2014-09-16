@@ -18,6 +18,7 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var breedLabel: UILabel!
     
+    var myTigers:[Tiger] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,11 +29,6 @@ class ViewController: UIViewController {
         myTiger.breed = "Bengal Tiger"
         myTiger.age = 3
         myTiger.image = UIImage(named: "BengalTiger.jpg")
-        
-        myImageView.image = myTiger.image
-        nameLabel.text = myTiger.name
-        ageLabel.text = "\(myTiger.age)"
-        breedLabel.text = myTiger.breed
         
         var secondTiger = Tiger()
         secondTiger.name = "Tigress"
@@ -52,6 +48,15 @@ class ViewController: UIViewController {
         fouthTiger.age = 5
         fouthTiger.image = UIImage(named: "SiberianTiger.jpg")
         
+        myTigers += [myTiger, secondTiger, thirdTiger, fouthTiger]
+        
+        myImageView.image = myTigers[0].image
+        nameLabel.text = myTigers[0].name
+        ageLabel.text = "\(myTigers[0].age)"
+        breedLabel.text = myTigers[0].breed
+        
+
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -62,8 +67,19 @@ class ViewController: UIViewController {
 
     @IBAction func nextBarButtonPressed(sender: UIBarButtonItem)
     {
+      
+        let randomIndex = Int(arc4random_uniform(UInt32(myTigers.count)))
+        let tiger = myTigers[randomIndex]
         
         
+        UIView.transitionWithView(self.view, duration: 2, options: UIViewAnimationOptions.TransitionCrossDissolve, animations: {
+                self.myImageView.image = tiger.image
+                self.nameLabel.text = tiger.name
+                self.ageLabel.text = "\(tiger.age)"
+                self.breedLabel.text = tiger.breed
+            }, completion: { (finished: Bool) -> () in
+                
+        })
     }
 }
 
