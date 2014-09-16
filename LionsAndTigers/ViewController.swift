@@ -19,6 +19,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var breedLabel: UILabel!
     
     var myTigers:[Tiger] = []
+    var currentIndex = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -67,10 +68,15 @@ class ViewController: UIViewController {
 
     @IBAction func nextBarButtonPressed(sender: UIBarButtonItem)
     {
-      
-        let randomIndex = Int(arc4random_uniform(UInt32(myTigers.count)))
-        let tiger = myTigers[randomIndex]
+        var randomIndex:Int
         
+        do {
+        randomIndex = Int(arc4random_uniform(UInt32(myTigers.count)))
+        }
+        while currentIndex == randomIndex
+        
+        let tiger = myTigers[randomIndex]
+        currentIndex = randomIndex
         
         UIView.transitionWithView(self.view, duration: 2, options: UIViewAnimationOptions.TransitionCrossDissolve, animations: {
                 self.myImageView.image = tiger.image
